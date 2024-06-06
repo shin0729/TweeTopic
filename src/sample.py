@@ -3,6 +3,7 @@ import os
 import re
 import torch
 from transformers import BertJapaneseTokenizer, BertForMaskedLM
+from pyknp import KNP
 
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
