@@ -13,22 +13,25 @@ def load_tweet(person_name):
     num_text = 0
     for file_name in json_files:
         file_path = os.path.join(path, file_name)
-        with open(file_path, 'r', encoding="utf_8_sig") as json_file:
-            json_load = json.load(json_file)
-            # print(json_load)
-            if "data" in json_load:
-                json_obj = json_load["data"]
-                # print(json_obj)
-                for item in json_obj:
-                    # print(type(item))
-                    if "author_id" in item:
-                        d = item["text"]
-                        contents.append(d)
-                        num_text += 1
-                    
+        with open(file_path, 'r', encoding="utf_8_sig", errors="ignore") as json_file:
+            try:
+                json_load = json.load(json_file)
+                # print(json_load)
+                if "data" in json_load:
+                    json_obj = json_load["data"]
+                    # print(json_obj)
+                    for item in json_obj:
+                        # print(type(item))
+                        if "author_id" in item:
+                            d = item["text"]
+                            contents.append(d)
+                            num_text += 1
+                        
 
-                else:
-                    contents.append("no_tweet")
+                    else:
+                        contents.append("no_tweet")
+            except json.JSONDecodeError:
+                print(f"Error decoding JSON from file: {file_path}")
     return  contents
 # tweet = load_tweet()
 # print(len(tweet))
@@ -60,9 +63,9 @@ def augument_anlysis(person_name,**person_tweet):
             if match:
                 pas =  match.group(1)
                 items = pas.split(":")
-                print((b.bnst_id,items))
+                # print((b.bnst_id,items))
                 sentence_list.append((b.bnst_id, items))
-    print(sentence_list)
+    # print(sentence_list)
     print(count_leading_numbers(sentence_list))
 
 def preprocessing(sentence):
@@ -90,10 +93,8 @@ def main():
     #     # print(i)
     #     person_tweet[i] = load_tweet(i)
     #     print(person_tweet)
-    for i in range(1):
-        # print(i)
-        person_tweet[files[i]] = load_tweet(files[i])
-        augument_anlysis(files[i],**person_tweet)
+    person_tweet[files[3]] = load_tweet(files[3])
+    augument_anlysis(files[3],**person_tweet)
 
 if __name__ == "__main__":
     main()
