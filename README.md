@@ -1,2 +1,2 @@
 # Tweetopic
-Twitterデータで学習されたLDAモデル
+Twitterデータの遊び場
